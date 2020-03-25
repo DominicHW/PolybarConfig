@@ -1,0 +1,405 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;==========================================================
+
+; Latest changes, 20-10-19:
+;	Added IP Address
+;	Changed BAT1 charging color to yellow	
+;	
+;	
+;	
+
+
+;========================================================
+; COLORS
+;========================================================
+
+[colors]
+background = #222
+background-alt = #444
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+yellow = #e5e50d
+
+
+
+
+;======================================================== 
+; GLOBAL SETTINGS
+;======================================================== 
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+
+
+
+;======================================================== 
+; MYBAR
+;======================================================== 
+
+[bar/mybar]
+width = 100%
+height = 27
+;offset-x = 1%
+;offset-y = 1%
+radius = 6.0
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 4
+border-color = #00000000
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+; ---------- FONTS USED ----------
+font-0 = NotoSans-Regular:size=11;0
+font-1 = Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid:size=11;0
+font-2 = Font Awesome 5 Free,Font Awesome 5 Free Regular:style=Regular:size=11;0
+font-4 = Font Awesome 5 Brands,Font Awesome 5 Brands Regular:style=Regular:size=11;0
+font-5 = NotoMono-Regular: size=11;0
+
+modules-left = i3
+modules-center = wlan
+modules-right = ipaddr filesystem memory cpu battery date
+
+tray-position = right
+tray-padding = 2
+;tray-background = #0063ff
+
+;wm-restack = i3
+
+;override-redirect = true
+
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+
+
+
+;========================================================
+; i3
+;========================================================
+
+[module/i3]
+type = internal/i3
+index-sort = true
+wrapping-scroll = false
+format = <label-state> <label-mode>
+
+; ws-icon-[0-9]+ = label;icon
+; NOTE: The label needs to match the name of the i3 workspace
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-default = 
+; NOTE: Icon will be available as the %icon% token inside label-*
+
+; Available tags:
+;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
+;   <label-mode> (default)
+; Available tokens:
+;   %mode%
+; Default: %mode%
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-background = #e60053
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+
+label-focused = %icon%
+label-focused-foreground = #ffffff
+label-focused-background = #3f3f3f
+label-focused-padding = 4
+
+label-unfocused = %icon%
+label-unfocused-foreground = ${colors.foreground-alt}
+label-unfocused-padding = 4
+
+label-visible = %index%
+label-visible-padding = 4
+
+label-urgent = %index%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-padding = 4
+
+
+
+
+;========================================================
+; STORAGE
+;========================================================
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+format-mounted =  <label-mounted>
+label-mounted = %free:2%
+
+
+
+
+;========================================================
+; CPU
+;========================================================
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "CPU: "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %percentage:2%%
+
+
+
+
+;========================================================
+; RAM
+;========================================================
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "RAM: "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %percentage_used%%
+
+
+
+
+;========================================================
+; WIFI
+;========================================================
+
+[module/wlan]
+type = internal/network
+interface = wlp1s0
+interval = 3.0
+
+format-connected =   <label-connected>
+label-connected = %essid% %downspeed% %upspeed%
+ 
+format-disconnected = <label-disconnected>
+label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground-alt}
+
+
+
+
+;========================================================
+; IP ADDRESS
+;========================================================
+
+[module/ipaddr]
+type = internal/network
+interface = wlp1s0
+interval = 3.0
+
+label-connected =  %local_ip%%{A}
+label-disconnected = ---
+
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+
+label-icon-foreground = ${colours.foreground-alt}
+label-disconnected-foreground = ${colors.foreground-alt}
+label-connected-foreground = ${colors.foreground}
+
+
+
+
+;========================================================
+; DATE
+;========================================================
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = "%d-%m-%Y "
+
+time = %H:%M:%S
+time-alt = %H:%M:%S
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground-alt}
+
+label = %date% %time%
+
+
+
+
+;========================================================
+; VOLUME
+;========================================================
+
+[module/volume]
+
+type = internal/alsa
+format-volume = <ramp-volume><label-volume>
+format-muted = <label-muted>
+format-volume-foreground = ${colors.foreground}
+
+label-volume = %percentage%
+label-muted =   M
+label-muted-foreground = #aaa
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-headphones-0 = 
+
+
+
+
+;========================================================
+; ALSA
+;========================================================
+
+[module/alsa]
+type = internal/alsa
+
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL
+label-volume-foreground = ${root.foreground}
+
+format-muted-foreground = ${colors.foreground-alt}
+label-muted =   MUTED
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+
+
+
+;========================================================
+; BATTERY
+;========================================================
+
+[module/battery]
+type = internal/battery
+battery = BAT1
+adapter = ADP1
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+format-prefix-foreground = ${colors.foreground-alt}
+
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-full = Fully Charged
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-foreground = ${colors.foreground-alt}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-foreground = ${colors.yellow}
+animation-charging-framerate = 750
+
+
+
+
+;========================================================
+; POWERMENU
+;========================================================
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.secondary}
+label-close =  cancel
+label-close-foreground = ${colors.secondary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+
+
+
+;========================================================
+; SETTINGS
+;========================================================
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
